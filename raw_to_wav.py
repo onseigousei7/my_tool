@@ -4,15 +4,18 @@ import os
 import librosa
 import soundfile as sf
 
+raw_rate = 48000
+sample_rate = 32000
+
 def convert_one_file(input_path, output_path):
     with open(input_path, "rb") as inp_f:
         data = inp_f.read()
         with wave.open(output_path, "wb") as out_f:
             out_f.setnchannels(1)
             out_f.setsampwidth(2)
-            out_f.setframerate(48000)
+            out_f.setframerate(raw_rate)
             out_f.writeframesraw(data)
-    y, sr = librosa.core.load(output_path, sr=32000, mono=True)
+    y, sr = librosa.core.load(output_path, sr=sample_rate, mono=True)
     sf.write(output_path, y, sr, subtype="PCM_16")
     
 
